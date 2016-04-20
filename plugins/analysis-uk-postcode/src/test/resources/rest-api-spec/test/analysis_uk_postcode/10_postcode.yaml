@@ -26,6 +26,16 @@
             analyzer: my_analyzer
             text: ME17 4GD
 
-    - length: { tokens: 1 }
-    - match:  { tokens.0.token: ME17 4GD }
+    - length: { tokens: 2 }
+    - match:  { tokens.0.token: "ME17 4GD" }
+    - match:  { tokens.1.token: "ME17" }
 
+    - do:
+        indices.analyze:
+            index: postcode_sample
+            analyzer: my_analyzer
+            text: me174gd
+
+    - length: { tokens: 2 }
+    - match:  { tokens.0.token: "ME17 4GD" }
+    - match:  { tokens.1.token: "ME17" }

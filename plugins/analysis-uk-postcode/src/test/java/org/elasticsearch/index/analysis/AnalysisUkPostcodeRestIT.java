@@ -27,9 +27,9 @@ import org.elasticsearch.test.rest.parser.RestTestParseException;
 
 import java.io.IOException;
 
-public class AnalysisPhoneticRestIT extends ESRestTestCase {
+public class AnalysisUkPostcodeRestIT extends ESRestTestCase {
 
-    public AnalysisPhoneticRestIT(@Name("yaml") RestTestCandidate testCandidate) {
+    public AnalysisUkPostcodeRestIT(@Name("yaml") RestTestCandidate testCandidate) {
         super(testCandidate);
     }
 
