@@ -1,0 +1,13 @@
+
+esplugin {
+  description 'The UK Postcode Analysis plugin integrates token filter analysis for UK postcode with elasticsearch.'
+  classname 'org.elasticsearch.plugin.analysis.AnalysisUkPostcodePlugin'
+}
+
+dependencies {
+  compile "commons-codec:commons-codec:${versions.commonscodec}"
+}
+
+dependencyLicenses {
+  mapping from: /lucene-.*/, to: 'lucene'
+}

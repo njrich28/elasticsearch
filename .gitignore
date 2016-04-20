@@ -11,6 +11,7 @@ build-idea/
 .classpath
 .settings
 build-eclipse/
+bin/
 
 # netbeans files
 nb-configuration.xml

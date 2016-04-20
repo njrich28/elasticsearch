@@ -1,0 +1,31 @@
+# Integration tests for Phonetic analysis components
+#
+
+
+"Metaphone":
+    - do:
+        indices.create:
+            index:  postcode_sample
+            body:
+                settings:
+                    index:
+                        analysis:
+                            analyzer:
+                                my_analyzer:
+                                    tokenizer: keyword
+                                    filter: ["my_postcode"]
+                            filter:
+                                my_postcode:
+                                    type: postcode
+    - do:
+        cluster.health:
+            wait_for_status: yellow
+    - do:
+        indices.analyze:
+            index: postcode_sample
+            analyzer: my_analyzer
+            text: ME17 4GD
+
+    - length: { tokens: 1 }
+    - match:  { tokens.0.token: ME17 4GD }
+

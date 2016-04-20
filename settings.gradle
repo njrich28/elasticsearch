@@ -23,6 +23,7 @@ List projects = [
   'plugins:analysis-phonetic',
   'plugins:analysis-smartcn',
   'plugins:analysis-stempel',
+  'plugins:analysis-uk-postcode',
   'plugins:delete-by-query',
   'plugins:discovery-azure',
   'plugins:discovery-ec2',
