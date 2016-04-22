@@ -37,17 +37,19 @@ public class UkPostcodeTokenFilter extends TokenFilter {
 
     private final CharTermAttribute termAttribute;
     private final PositionIncrementAttribute positionIncrementAttribute;
+    private final boolean includeOutcode;
 
     /**
      * Construct a token stream filtering the given input.
      *
      * @param input source TokenStream
      */
-    protected UkPostcodeTokenFilter(TokenStream input) {
+    protected UkPostcodeTokenFilter(TokenStream input, boolean includeOutcode) {
         super(input);
         this.synonymStack = new Stack<>();
         this.termAttribute = addAttribute(CharTermAttribute.class);
         this.positionIncrementAttribute = addAttribute(PositionIncrementAttribute.class);
+        this.includeOutcode = includeOutcode;
     }
 
     @Override
@@ -75,8 +77,10 @@ public class UkPostcodeTokenFilter extends TokenFilter {
         UkPostcodeMatcher matcher = new UkPostcodeMatcher(value);
         if (matcher.isPostcode()) {
             termAttribute.setEmpty();
-            termAttribute.append(matcher.getPostcode());
-            synonymStack.push(matcher.getOutcode());
+            synonymStack.push(matcher.getPostcode());
+            if (includeOutcode) {
+                synonymStack.push(matcher.getOutcode());
+            }
             return true;
         }
         return false;

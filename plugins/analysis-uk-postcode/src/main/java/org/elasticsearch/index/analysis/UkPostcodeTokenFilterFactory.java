@@ -29,12 +29,15 @@ import org.elasticsearch.index.IndexSettings;
  */
 public class UkPostcodeTokenFilterFactory extends AbstractTokenFilterFactory {
 
+    private final boolean includeOutcode;
+
     public UkPostcodeTokenFilterFactory(IndexSettings indexSettings, Environment environment, String name, Settings settings) {
         super(indexSettings, name, settings);
+        this.includeOutcode = settings.getAsBoolean("include_outcode", false);
     }
 
     @Override
     public TokenStream create(TokenStream tokenStream) {
-        return new UkPostcodeTokenFilter(tokenStream);
+        return new UkPostcodeTokenFilter(tokenStream, includeOutcode);
     }
 }

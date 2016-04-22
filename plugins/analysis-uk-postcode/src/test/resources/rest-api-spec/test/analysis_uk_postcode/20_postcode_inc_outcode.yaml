@@ -11,29 +11,34 @@
                     index:
                         analysis:
                             analyzer:
-                                my_analyzer:
+                                my_analyzer_inc_outcode:
                                     tokenizer: keyword
-                                    filters: ["my_postcode"]
+                                    filter: ["my_postcode_inc_outcode"]
                             filter:
-                                my_postcode:
+                                my_postcode_inc_outcode:
                                     type: postcode
+                                    include_outcode: true
+
     - do:
         cluster.health:
             wait_for_status: yellow
+
     - do:
         indices.analyze:
             index: postcode_sample
-            analyzer: my_analyzer
+            analyzer: my_analyzer_inc_outcode
             text: ME17 4GD
 
-    - length: { tokens: 1 }
+    - length: { tokens: 2 }
     - match:  { tokens.0.token: "ME17 4GD" }
+    - match:  { tokens.1.token: "ME17" }
 
     - do:
         indices.analyze:
             index: postcode_sample
-            analyzer: my_analyzer
+            analyzer: my_analyzer_inc_outcode
             text: me174gd
 
-    - length: { tokens: 1 }
+    - length: { tokens: 2 }
     - match:  { tokens.0.token: "ME17 4GD" }
+    - match:  { tokens.1.token: "ME17" }
